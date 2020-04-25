@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[16]:
 
 
 import numpy as np
@@ -9,7 +8,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 
-# In[103]:
 
 
 def BGT(img: str, saving_dir: str):
@@ -33,8 +31,6 @@ def BGT(img: str, saving_dir: str):
     new_image = array_to_img(new_image, saving_dir)
 
 
-# In[104]:
-
 
 def frequency(image: np.array):
     '''
@@ -47,9 +43,6 @@ def frequency(image: np.array):
         freq[i] += 1
     
     return freq
-
-
-# In[105]:
 
 
 def BGT_threshold(hist: np.array) -> float:
@@ -88,9 +81,6 @@ def BGT_threshold(hist: np.array) -> float:
     return mu
 
 
-# In[106]:
-
-
 def weighted_mean(numbers: np.array, freq: np.array):
     '''
     input: 1-D array of numbers and 1-D array recording the frequency
@@ -106,9 +96,6 @@ def weighted_mean(numbers: np.array, freq: np.array):
         
     mean = Sum / freq_sum
     return mean
-
-
-# In[107]:
 
 
 def img_to_array(img: str):
@@ -128,25 +115,20 @@ def img_to_array(img: str):
     return image
 
 
-# In[378]:
-
-
 def array_to_img(img: np.array, saving_dir: str):
     '''
     convert an array to gray-scale image and print&save it
     input: 2-D array of pixels in the image
     output: 
     '''
-    image = Image.fromarray(np.uint8(img)) # convert the array to image
-    image.save(saving_dir, 'jpeg') # save the image
+    image = Image.fromarray(np.uint8(img))  # convert the array to image
+    image.save(saving_dir, 'jpeg')  # save the image
     # print the image
     plt.subplot(1,2,2)
     plt.title('processed image')
     plt.axis('off')
     plt.imshow(image, cmap = 'gray')
 
-
-# In[109]:
 
 
 def binarization(threshold: float, img: np.array, reverse = False):
@@ -179,14 +161,8 @@ def binarization(threshold: float, img: np.array, reverse = False):
     return img
 
 
-# In[110]:
-
-
 # test the BGP algorithm on the image
-BGT('test1.jpg', 'BGP_test1.jpg')
-
-
-# In[381]:
+BGT('./input/test1.jpg', 'BGP_test1.jpg')
 
 
 # implement the locally adaptive thresholding 
@@ -205,10 +181,6 @@ def LAT(img: str, saving_dir: str, n:int):
     
     # turn array into image and save
     new_image = array_to_img(new_image, saving_dir)
-    
-
-
-# In[382]:
 
 
 def MA(image: np.array,n):
@@ -251,9 +223,6 @@ def MA(image: np.array,n):
     return new_image
 
 
-# In[383]:
-
-
 def compute_local_threshold(pixels, n):
     '''
     given an 1-D array of pixel values, compute the threshold
@@ -262,9 +231,6 @@ def compute_local_threshold(pixels, n):
     for pixel in pixels:
         s += pixel / n**2
     return s
-
-
-# In[384]:
 
 
 def update_threshold(current_pixel, last_pixel, image: np.array, x:int, y:int, n: int, threshold):
@@ -283,9 +249,6 @@ def update_threshold(current_pixel, last_pixel, image: np.array, x:int, y:int, n
         #print('new', pixel)
     
     return threshold
-
-
-# In[385]:
 
 
 def get_line_changes(current_pixel, last_pixel, x, y, image, n):
@@ -322,9 +285,6 @@ def get_line_changes(current_pixel, last_pixel, x, y, image, n):
     return del_line, add_line
 
 
-# In[386]:
-
-
 def get_boundary(pixel, x, y, n):
     '''
     input: the current pixel coordinate, image size, local size
@@ -346,10 +306,7 @@ def get_boundary(pixel, x, y, n):
     else:
         boundary.append(pixel[1]-half)
         
-    return boundary     
-
-
-# In[387]:
+    return boundary
 
 
 def update_pixel(pixel, threshold):
@@ -363,14 +320,8 @@ def update_pixel(pixel, threshold):
     return pixel
 
 
-# In[388]:
-
-
 # test LAT algorithm on an image
 LAT('test1.jpg', 'LAT_test1.jpg',55)
-
-
-# In[371]:
 
 
 def LI(img: str, saving_dir: str, n: int):
@@ -387,9 +338,6 @@ def LI(img: str, saving_dir: str, n: int):
     # turn array into image and save
     new_image = array_to_img(new_image, saving_dir)
     
-
-
-# In[375]:
 
 
 def LI_compute(image, n):
@@ -416,9 +364,6 @@ def LI_compute(image, n):
     return new_image
 
 
-# In[389]:
-
-
 # test LI algorithm on an image
-LI('test1.jpg', 'LI_test1.jpg',3)
+LI('./input/test1.jpg', 'LI_test1.jpg',3)
 
